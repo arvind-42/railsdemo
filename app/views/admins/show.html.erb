@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @admin.name %>
+</p>
+
+<p>
+  <strong>Media Detail:</strong>
+
+  <% if @admin.image.present? %>
+    <%= @admin.image.blob.filename %>
+  <% else %>
+    No Media Found!
+  <% end %>
+
+</p>
+
+<% if @admin.image.present? %>
+<p>
+  <strong>Media:</strong>
+
+  <% if @admin.image.blob.content_type == "image/jpeg" %>
+    <%= image_tag @admin.image, style: "width: 100px;" %>
+  <% elsif @admin.image.blob.content_type == "video/mp4" %>
+    <video controls>
+        <source src="<%= url_for(@admin.image) %>">
+    </video>
+  <% elsif @admin.image.blob.content_type == "audio/mpeg" %>
+    <audio controls>
+        <source src="<%= url_for(@admin.image) %>">
+    </audio>
+  <% else %>
+  "Media format is not supported in the admin yet, please download the media to view"
+  <% end %>
+
+</p>
+<% end %>
+
+<% if @admin.image.present? %>
+  <%= link_to "Download", @admin.image, download: true %>
+<% end %>
+<%= link_to 'Edit', edit_admin_path(@admin) %> |
+<%= link_to 'Back', admins_path %>
