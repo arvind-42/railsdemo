@@ -56,6 +56,9 @@ ActiveAdmin.register Admin do
           when "image/jpeg"
             image_tag ad.image, :width=>250
 
+          when "image/png"
+            image_tag ad.image, :width=>250
+
           when "video/mp4"
             video(width: 480, height: 320, controls: true) do
               source(src: polymorphic_url(admin.image))
@@ -64,6 +67,8 @@ ActiveAdmin.register Admin do
             audio(controls: true) do
               source(src: polymorphic_url(admin.image))
             end
+          when "application/pdf"
+            button_to "Open Pdf", polymorphic_url(admin.image), method: :get, form: {target: '_blank'}
           else  
             "Media format is not supported in the admin yet, please download the media file to view"
           end 
